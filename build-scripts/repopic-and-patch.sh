@@ -29,10 +29,16 @@ function applyPatches {
 } 
 
 if [[ -z $LOCAL_REPOPICS_PATCHES ]]; then
+    echo "Downloading repopics file..."
     curl -L -o /tmp/default-repopics.txt https://raw.githubusercontent.com/PabloZaiden/switchroot-android-build/master/build-scripts/default-repopics.txt
+    
+    echo "Downloading patches file..."
     curl -L -o /tmp/default-patches.txt https://raw.githubusercontent.com/PabloZaiden/switchroot-android-build/master/build-scripts/default-patches.txt
 else
+    echo "Copying local repopics file..."
     cp "${BUILDBASE}/default-repopics.txt" /tmp/default-repopics.txt
+    
+    echo "Copying local patches file..."
     cp "${BUILDBASE}/default-patches.txt" /tmp/default-patches.txt
 fi
 
