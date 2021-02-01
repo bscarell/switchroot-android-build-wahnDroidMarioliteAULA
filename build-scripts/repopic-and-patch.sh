@@ -30,6 +30,9 @@ function applyPatches {
     done < $PATCHES_FILE
 } 
 
+rm /tmp/default-repopics.txt
+rm /tmp/default-patches.txt
+
 if [[ -z $LOCAL_REPOPICS_PATCHES ]]; then
     echo "Downloading repopics file..."
     curl -L -o /tmp/default-repopics.txt https://raw.githubusercontent.com/PabloZaiden/switchroot-android-build/master/build-scripts/default-repopics.txt
