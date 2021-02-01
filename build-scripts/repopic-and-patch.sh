@@ -39,10 +39,10 @@ fi
 applyPatches /tmp/default-repopics.txt
 applyRepopics /tmp/default-patches.txt
 
-if [[ -f "$EXTRA_CONTENT/patches.txt" ]]; then
-    applyPatches "$EXTRA_CONTENT/patches.txt"
-fi
-
 if [[ -f "$EXTRA_CONTENT/repopics.txt" ]]; then
     applyRepopics "$EXTRA_CONTENT/repopics.txt"
+fi
+
+if [[ -f "$EXTRA_CONTENT/patches.txt" ]]; then
+    applyPatches "$EXTRA_CONTENT/patches.txt"
 fi
