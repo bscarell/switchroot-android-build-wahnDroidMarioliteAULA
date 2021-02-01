@@ -28,8 +28,16 @@ function applyPatches {
     done < $PATCHES_FILE
 } 
 
-applyPatches "${BUILDBASE}/default-patches.txt"
-applyRepopics "${BUILDBASE}/default-repopics.txt"
+if [[ -z $LOCAL_REPOPICS_PATCHES ]]; then
+    curl -L -o /tmp/default-repopics.txt https://raw.githubusercontent.com/PabloZaiden/switchroot-android-build/master/build-scripts/default-repopics.txt
+    curl -L -o /tmp/default-patches.txt https://raw.githubusercontent.com/PabloZaiden/switchroot-android-build/master/build-scripts/default-patches.txt
+else
+    cp "${BUILDBASE}/default-repopics.txt" /tmp/default-repopics.txt
+    cp "${BUILDBASE}/default-patches.txt" /tmp/default-patches.txt
+fi
+
+applyPatches /tmp/default-repopics.txt
+applyRepopics /tmp/default-patches.txt
 
 if [[ -f "$EXTRA_CONTENT/patches.txt" ]]; then
     applyPatches "$EXTRA_CONTENT/patches.txt"
