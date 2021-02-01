@@ -2,6 +2,7 @@
 
 function applyRepopics {
     REPOPICS_FILE=$1
+    echo "Applying repopics from $REPOPICS_FILE"
 
     cd ${BUILDBASE}/android/lineage/
     while IFS= read -r line; do
@@ -12,6 +13,7 @@ function applyRepopics {
 }
 function applyPatches {
     PATCHES_FILE=$1
+    echo "Applying patches from $PATCHES_FILE"
 
     while read -r line; do
         IFS=':' read -r -a parts <<< "$line"
@@ -42,8 +44,8 @@ else
     cp "${BUILDBASE}/default-patches.txt" /tmp/default-patches.txt
 fi
 
-applyPatches /tmp/default-repopics.txt
-applyRepopics /tmp/default-patches.txt
+applyRepopics /tmp/default-repopics.txt
+applyPatches /tmp/default-patches.txt
 
 if [[ -f "$EXTRA_CONTENT/repopics.txt" ]]; then
     applyRepopics "$EXTRA_CONTENT/repopics.txt"
