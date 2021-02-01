@@ -1,15 +1,15 @@
 #!/bin/bash
 
-cd ${BUILDBASE}/android/lineage/
-${BUILDBASE}/android/lineage/vendor/lineage/build/tools/repopick.py -t icosa-bt-lineage-17.1
-${BUILDBASE}/android/lineage/vendor/lineage/build/tools/repopick.py -t nvidia-shieldtech-q
-${BUILDBASE}/android/lineage/vendor/lineage/build/tools/repopick.py -t nvidia-beyonder-q
-${BUILDBASE}/android/lineage/vendor/lineage/build/tools/repopick.py 300860
-${BUILDBASE}/android/lineage/vendor/lineage/build/tools/repopick.py 287339
-${BUILDBASE}/android/lineage/vendor/lineage/build/tools/repopick.py 302339
-${BUILDBASE}/android/lineage/vendor/lineage/build/tools/repopick.py 302554
-${BUILDBASE}/android/lineage/vendor/lineage/build/tools/repopick.py 284553
+function applyRepopics {
+    REPOPICS_FILE=$1
 
+    cd ${BUILDBASE}/android/lineage/
+    while IFS= read -r line; do
+        echo "Applying repopic: $line"
+        eval "${BUILDBASE}/android/lineage/vendor/lineage/build/tools/repopick.py $line"
+
+    done < $REPOPICS_FILE
+}
 function applyPatches {
     PATCHES_FILE=$1
 
@@ -28,7 +28,20 @@ function applyPatches {
     done < $PATCHES_FILE
 } 
 
-applyPatches "${BUILDBASE}/default-patches.txt"
+if [[ -z $LOCAL_REPOPICS_PATCHES ]]; then
+    curl -L -o /tmp/default-repopics.txt https://raw.githubusercontent.com/PabloZaiden/switchroot-android-build/master/build-scripts/default-repopics.txt
+    curl -L -o /tmp/default-patches.txt https://raw.githubusercontent.com/PabloZaiden/switchroot-android-build/master/build-scripts/default-patches.txt
+else
+    cp "${BUILDBASE}/default-repopics.txt" /tmp/default-repopics.txt
+    cp "${BUILDBASE}/default-patches.txt" /tmp/default-patches.txt
+fi
+
+applyPatches /tmp/default-repopics.txt
+applyRepopics /tmp/default-patches.txt
+
+if [[ -f "$EXTRA_CONTENT/repopics.txt" ]]; then
+    applyRepopics "$EXTRA_CONTENT/repopics.txt"
+fi
 
 if [[ -f "$EXTRA_CONTENT/patches.txt" ]]; then
     applyPatches "$EXTRA_CONTENT/patches.txt"
