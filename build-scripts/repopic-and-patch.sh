@@ -29,7 +29,7 @@ function applyPatches {
 } 
 
 applyPatches "${BUILDBASE}/default-patches.txt"
-applyRepopics "${BUILDBASE}/default-patches.txt"
+applyRepopics "${BUILDBASE}/default-repopics.txt"
 
 if [[ -f "$EXTRA_CONTENT/patches.txt" ]]; then
     applyPatches "$EXTRA_CONTENT/patches.txt"
