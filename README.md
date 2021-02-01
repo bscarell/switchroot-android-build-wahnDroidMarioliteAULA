@@ -55,10 +55,12 @@ All parameters are optional. Default for --rom is `icosa`, default for --rom-typ
 
 If that directory is not properly mounted, the build may fail.
 
-### Custom patches
+### Custom repopics and patches
 
-To apply custom patches to your build, create the `extra-content/patches.txt` file and add lines with the `<patch_base_dir>:<patch_path>` format. The same format is being used for default patches in `build-scripts/default-patches.txt`
-The file **must** end with an empty line.
+To apply custom patches to your build, create the `extra-content/patches.txt`  file and add lines with the `<patch_base_dir>:<patch_path>` format or add the `extra-content/repopics.txt` with one patch per line. The same format is being used for default patches and repopics in `build-scripts/default-patches.txt` and `build-scripts/default-repopics.txt`
+The files **must** end with an empty line.
+
+By default, the script will try to download the latest repopics and patches from the main repository `master` branch. To avoid doing this and always use the local copy, add a non-empty `LOCAL_REPOPICS_PATCHES` environment variable
 
 When building with docker, make sure to also mount the `extra-content` directory to `${BUILDBASE}/extra-content` (as it is done in `build-in-docker.sh`)
 
