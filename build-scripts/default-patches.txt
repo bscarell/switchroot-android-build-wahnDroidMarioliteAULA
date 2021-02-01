@@ -1,6 +1,6 @@
 ${BUILDBASE}/android/lineage/bionic:${BUILDBASE}/android/lineage/.repo/local_manifests/patches/bionic_intrinsics.patch
-${BUILDBASE}/android/lineage/device/nvidia/foster_tab:${BUILDBASE}/android/lineage/.repo/local_manifests/patches/device_nvidia_foster_tab-beyonder.patch
-${BUILDBASE}/android/lineage/frameworks/native:${BUILDBASE}/android/lineage/.repo/local_manifests/patches/frameworks_native-mouse.patch
 ${BUILDBASE}/android/lineage/device/lineage/atv:${BUILDBASE}/android/lineage/.repo/local_manifests/patches/device_lineage_atv-res.patch
+${BUILDBASE}/android/lineage/device/nvidia/foster_tab:${BUILDBASE}/android/lineage/.repo/local_manifests/patches/device_nvidia_foster_tab-beyonder.patch
+${BUILDBASE}/android/lineage/frameworks/base:${BUILDBASE}/android/lineage/.repo/local_manifests/patches/frameworks_base-beyonder-hack.patch
+${BUILDBASE}/android/lineage/frameworks/native:${BUILDBASE}/android/lineage/.repo/local_manifests/patches/frameworks_native-mouse.patch
 ${BUILDBASE}/android/lineage/system/core:${BUILDBASE}/android/lineage/.repo/local_manifests/patches/system_core-gatekeeper-hack.patch
-${BUILDBASE}/android/lineage/frameworks/base:${BUILDBASE}/android/lineage/.repo/local_manifests/patches/frameworks_base-desktop-dock.patch
