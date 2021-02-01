@@ -2,8 +2,6 @@
 
 This repo provides a set of scripts and a Dockerfile (`build-scripts/Dockerfile`) to create the basic environment for building Lineage and Switchroot Android.
 
-**To use the prebuilt docker images, check out the [latest release](https://github.com/PabloZaiden/switchroot-android-build/releases/latest) in this GitHub repository.**
-
 ## Read this before doing anything else, or Voldemort will come for you and summon his dragons:
 This build environment is meant to automate the steps from the following guide: [Q Tips Guide](https://gitlab.com/ZachyCatGames/q-tips-guide)
 
@@ -13,7 +11,7 @@ Also, if you have built Switchroot *Pie* before, delete the whole `./android` di
 
 After doing that, you can use this to generate the content of your SD card for flashing and installing via Hekate and TWRP.
 
-## Build using the image in Dockerhub:
+## Build using the prebuilt image from Dockerhub:
 - Boot Linux (natively or a VM. Don't use *WSL* or *WSL2* with the Dockerized build unless you *really* know what you are doing, since it has severe performance issues with this particular scenario)
 - Install `docker` (**proper docker installation**: `apt install docker.io` if on Ubuntu. It *might* work if installed via Snap with the latest changes, but it wasn't tested. It now requires `--privileged` mode) 
 - Go to a directory on a drive where there are at least 250GB of free space.
@@ -32,19 +30,18 @@ sudo docker run --privileged --rm -ti -e ROM_NAME=icosa -v "$PWD"/android:/build
 ## Detailed usage information
 
 ### Requirements
-- Docker
 - At least 16GB of RAM
 - At least 250GB of free storage
 
 ### Build everything locally
 
 - Clone/Download this repo.
-- If you *don't want* to use `docker`:
+- If you *don't want* to use Docker:
     - Avoid having the docker service enabled *or* set any value to the `DISABLE_DOCKER` environment variable.
-    - Set the `BUILDBASE` environment variable to the path of the base directory where the process will be executed. If `BUILDBASE` is not defined, it will use `$(pwd)/build`. 
-    - Make sure to install all the prerequisites before starting (the convenience script `install-prerequisites-ubuntu.sh` is provided with this repo)
-    - If a previous build was created using docker, it will create a symbolic link to it instead of starting from scratch. This behavior can be disabled with the `DISABLE_SYMLINK_TO_DOCKER_BUILD` environment variable
-    - If you're using *WSL2*, make sure the drive you're using is either NTFS or ext4, and mounted correctly in *WSL2*. For more information on mounting drives in *WSL2*, see https://docs.microsoft.com/en-us/windows/wsl/wsl2-mount-disk (at this time, the `--mount` feature is only available on developer insider builds of Windows 10). Also, make sure to configure *WSL2* to have, at least 16GB of available RAM or 12GB and enough swap: https://docs.microsoft.com/en-us/windows/wsl/wsl-config#configure-global-options-with-wslconfig)
+    - By default, the `BUILDBASE` directory will be set to `$(pwd)/build`. To change this, set the `BUILDBASE` environment variable to the path of the base directory where the process will be executed. 
+    - Make sure to install all the prerequisites before starting (there is a convenience script `install-prerequisites-ubuntu.sh` provided with this repository. It was only tested on Ubuntu)
+    - If a previous build was created using Docker, it will create a symbolic link to it instead of starting from scratch. This behavior can be disabled with the `DISABLE_SYMLINK_TO_DOCKER_BUILD` environment variable
+    - If you're using *WSL2*, make sure the drive you're using is either *ext4* (recommended) or *NTFS*, and the volume is correctly mounted in the *WSL2* distro you are using. For more information on mounting drives in *WSL2*, see https://docs.microsoft.com/en-us/windows/wsl/wsl2-mount-disk (at this time, the `--mount` feature is only available on developer insider builds of Windows 10). Also, make sure to configure *WSL2* to have, at least 16GB of available RAM or 12GB and enough swap: https://docs.microsoft.com/en-us/windows/wsl/wsl-config#configure-global-options-with-wslconfig)
 - If you're using `docker` Either prepend `sudo` to the script execution, or allow the current user to run `docker` without `sudo`
 - Run `./build-android.sh --rom <icosa | foster | foster_tab> --rom-type <zip | images> --flags <nobuild | noupdate | nooutput>`  
 All parameters are optional. Default for --rom is `icosa`, default for --rom-type is `zip`, default for --flags is empty
@@ -55,10 +52,12 @@ All parameters are optional. Default for --rom is `icosa`, default for --rom-typ
 
 If that directory is not properly mounted, the build may fail.
 
-### Custom patches
+### Custom repopics and patches
 
-To apply custom patches to your build, create the `extra-content/patches.txt` file and add lines with the `<patch_base_dir>:<patch_path>` format. The same format is being used for default patches in `build-scripts/default-patches.txt`
-The file **must** end with an empty line.
+To apply custom patches to your build, create the `extra-content/patches.txt`  file and add lines with the `<patch_base_dir>:<patch_path>` format or add the `extra-content/repopics.txt` with one patch per line. The same format is being used for default patches and repopics in `build-scripts/default-patches.txt` and `build-scripts/default-repopics.txt`
+The files **must** end with an empty line.
+
+By default, the script will try to download the latest repopics and patches from the main repository `master` branch. To avoid doing this and always use the local copy, add a non-empty `LOCAL_REPOPICS_PATCHES` environment variable
 
 When building with docker, make sure to also mount the `extra-content` directory to `${BUILDBASE}/extra-content` (as it is done in `build-in-docker.sh`)
 
