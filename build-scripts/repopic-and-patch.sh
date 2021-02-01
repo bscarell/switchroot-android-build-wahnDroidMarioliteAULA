@@ -1,15 +1,15 @@
 #!/bin/bash
 
-cd ${BUILDBASE}/android/lineage/
-${BUILDBASE}/android/lineage/vendor/lineage/build/tools/repopick.py -t icosa-bt-lineage-17.1
-${BUILDBASE}/android/lineage/vendor/lineage/build/tools/repopick.py -t nvidia-shieldtech-q
-${BUILDBASE}/android/lineage/vendor/lineage/build/tools/repopick.py -t nvidia-beyonder-q
-${BUILDBASE}/android/lineage/vendor/lineage/build/tools/repopick.py 300860
-${BUILDBASE}/android/lineage/vendor/lineage/build/tools/repopick.py 287339
-${BUILDBASE}/android/lineage/vendor/lineage/build/tools/repopick.py 302339
-${BUILDBASE}/android/lineage/vendor/lineage/build/tools/repopick.py 302554
-${BUILDBASE}/android/lineage/vendor/lineage/build/tools/repopick.py 284553
+function applyRepopics {
+    REPOPICS_FILE=$1
 
+    cd ${BUILDBASE}/android/lineage/
+    while IFS= read -r line; do
+        echo "Applying repopic: $line"
+        eval "${BUILDBASE}/android/lineage/vendor/lineage/build/tools/repopick.py $line"
+
+    done < $REPOPICS_FILE
+}
 function applyPatches {
     PATCHES_FILE=$1
 
@@ -29,7 +29,12 @@ function applyPatches {
 } 
 
 applyPatches "${BUILDBASE}/default-patches.txt"
+applyRepopics "${BUILDBASE}/default-patches.txt"
 
 if [[ -f "$EXTRA_CONTENT/patches.txt" ]]; then
     applyPatches "$EXTRA_CONTENT/patches.txt"
+fi
+
+if [[ -f "$EXTRA_CONTENT/repopics.txt" ]]; then
+    applyRepopics "$EXTRA_CONTENT/repopics.txt"
 fi
