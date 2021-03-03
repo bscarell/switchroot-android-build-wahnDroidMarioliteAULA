@@ -57,7 +57,7 @@ If that directory is not properly mounted, the build may fail.
 To apply custom patches to your build, create the `extra-content/patches.txt`  file and add lines with the `<patch_base_dir>:<patch_path>` format or add the `extra-content/repopics.txt` with one patch per line. The same format is being used for default patches and repopics in `build-scripts/default-patches.txt` and `build-scripts/default-repopics.txt`
 The files **must** end with an empty line.
 
-By default, the script will try to download the latest repopics and patches from the main repository `master` branch. To avoid doing this and always use the local copy, add a non-empty `LOCAL_REPOPICS_PATCHES` environment variable
+By default, the script will try to download the latest repopics main repository `master` branch and will generate the patches file based on the contents of the switchroot `manifest`. To avoid doing this and always use the local copy, add a non-empty `LOCAL_REPOPICS_PATCHES` environment variable. Keep in mind that it may not always be up to date.
 
 When building with docker, make sure to also mount the `extra-content` directory to `${BUILDBASE}/extra-content` (as it is done in `build-in-docker.sh`)
 
