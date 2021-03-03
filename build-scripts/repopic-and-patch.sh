@@ -28,7 +28,29 @@ function applyPatches {
             eval "patch -p1 -d ${parts[0]} -i ${parts[1]}"
         fi
     done < $PATCHES_FILE
-} 
+}
+
+function generatePatchesFile {
+    PATCHES_FILE=$1
+    PATCHES_DIR=${BUILDBASE}/android/lineage/.repo/local_manifests/patches
+    CODE_DIR=${BUILDBASE}/android/lineage
+    FOSTER_TAB_NAME=foster_tab
+    FOSTER_TAB_TEMP_NAME=999fostertab999
+
+    for PATCH_FILE in $PATCHES_DIR/*.patch
+    do
+        FILE_NAME=$(basename $PATCH_FILE)
+        
+        IFS='-' read -r PATCH_DIR PATCH_NAME <<< "$FILE_NAME"
+
+        PATCH_DIR="${PATCH_DIR/$FOSTER_TAB_NAME/$FOSTER_TAB_TEMP_NAME}" 
+        PATCH_DIR="${PATCH_DIR//\_//}" 
+        PATCH_DIR="${PATCH_DIR/$FOSTER_TAB_TEMP_NAME/$FOSTER_TAB_NAME}" 
+
+        echo $CODE_DIR/$PATCH_DIR:$PATCH_FILE >> $PATCHES_FILE
+    done
+    echo "" >> $PATCHES_FILE
+}
 
 rm /tmp/default-repopics.txt
 rm /tmp/default-patches.txt
@@ -37,8 +59,8 @@ if [[ -z $LOCAL_REPOPICS_PATCHES ]]; then
     echo "Downloading repopics file..."
     curl -L -o /tmp/default-repopics.txt https://raw.githubusercontent.com/PabloZaiden/switchroot-android-build/master/build-scripts/default-repopics.txt
     
-    echo "Downloading patches file..."
-    curl -L -o /tmp/default-patches.txt https://raw.githubusercontent.com/PabloZaiden/switchroot-android-build/master/build-scripts/default-patches.txt
+    echo "Generating patches file..."
+    generatePatchesFile /tmp/default-patches.txt
 else
     echo "Copying local repopics file..."
     cp "${BUILDBASE}/default-repopics.txt" /tmp/default-repopics.txt
