@@ -47,9 +47,14 @@ function generatePatchesFile {
         PATCH_DIR="${PATCH_DIR//\_//}" 
         PATCH_DIR="${PATCH_DIR/$FOSTER_TAB_TEMP_NAME/$FOSTER_TAB_NAME}" 
 
-        echo $CODE_DIR/$PATCH_DIR:$PATCH_FILE >> $PATCHES_FILE
+        if grep -Fxq "GIT binary patch" $PATCH_FILE
+        then
+            PATCH_LINE_SUFFIX=":git"
+        else
+            PATCH_LINE_SUFFIX=""
+        fi
+        echo $CODE_DIR/$PATCH_DIR:$PATCH_FILE$PATCH_LINE_SUFFIX >> $PATCHES_FILE
     done
-    echo "" >> $PATCHES_FILE
 }
 
 rm /tmp/default-repopics.txt
