@@ -4,3 +4,4 @@ output
 build
 extra-content/patches.txt
 .DS_Store
+.vscode
