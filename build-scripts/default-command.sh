@@ -4,6 +4,7 @@ cd ${BUILDBASE}
 
 if [[ "$(ls -A ./android/lineage)" ]]; then
     echo "Sources found. Skipping..."
+    FLAGS = $FLAGS + " noupdate"
 else
     if [[ -d ./Android ]] && [[ "$(cat /proc/version)" == *"microsoft"* ]];
     then  
