@@ -22,7 +22,7 @@ sudo chown -R 1000:1000 ./android
 
 # Don't use the "latest" tag unless you know what you're doing. 
 # Use a versioned tag from https://hub.docker.com/r/pablozaiden/switchroot-android-build/tags
-sudo docker run --privileged --rm -ti -e ROM_NAME=icosa -v "$PWD"/android:/build/android pablozaiden/switchroot-android-build:latest
+sudo docker run --privileged --rm -ti -e ROM_NAME=icosa_sr -v "$PWD"/android:/build/android pablozaiden/switchroot-android-build:latest
 ```
 - Copy the content of `./android/output` to the root of your SD card (partitioned as a single FAT32-formatted volume; format with Hekate as it ensures proper cluster size for performance)
 - Create the remaining partitions from within Hekate, flash TWRP and install after that. (It is expected to see some errors about mounting some partitions in TWRP the first time flashing)
@@ -43,8 +43,8 @@ sudo docker run --privileged --rm -ti -e ROM_NAME=icosa -v "$PWD"/android:/build
     - If a previous build was created using Docker, it will create a symbolic link to it instead of starting from scratch. This behavior can be disabled with the `DISABLE_SYMLINK_TO_DOCKER_BUILD` environment variable
     - If you're using *WSL2*, make sure the drive you're using is either *ext4* (recommended) or *NTFS*, and the volume is correctly mounted in the *WSL2* distro you are using. For more information on mounting drives in *WSL2*, see https://docs.microsoft.com/en-us/windows/wsl/wsl2-mount-disk (at this time, the `--mount` feature is only available on developer insider builds of Windows 10). Also, make sure to configure *WSL2* to have, at least 16GB of available RAM or 12GB and enough swap: https://docs.microsoft.com/en-us/windows/wsl/wsl-config#configure-global-options-with-wslconfig)
 - If you're using `docker` Either prepend `sudo` to the script execution, or allow the current user to run `docker` without `sudo`
-- Run `./build-android.sh --rom <icosa | foster | foster_tab> --rom-type <zip | images> --flags <nobuild | noupdate | nooutput>`  
-All parameters are optional. Default for --rom is `icosa`, default for --rom-type is `zip`, default for --flags is empty
+- Run `./build-android.sh --rom <icosa_sr | icosa_tv_sr> --rom-type <zip | images> --flags <nobuild | noupdate | nooutput>`  
+All parameters are optional. Default for --rom is `icosa_sr`, default for --rom-type is `zip`, default for --flags is empty
 - When building the `zip`, the required output for installing via Hekate will be copied to `./android/output` or `$BUILDBASE/android/output`, unless the `nooutput` flag is present
 - Any subsequent build execution will detect that the `./android/lineage` or `$BUILDBASE/android/lineage` directoy contains files and will work under the assumption that the source code was already downloaded at least once. Then it will re-sync the repos, re-apply patches and re-build
 

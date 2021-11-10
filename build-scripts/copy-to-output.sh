@@ -38,7 +38,7 @@ curl -L -o ./android/output/switchroot/android/common.scr https://gitlab.com/swi
 curl -L -o ./android/output/switchroot/android/boot.scr https://gitlab.com/switchroot/bootstack/switch-uboot-scripts/-/jobs/artifacts/master/raw/sd.scr?job=build
 
 # swap gapps type to tvmini for atv
-if [[ $ROM_NAME = "foster" ]]; then
+if [[ $ROM_NAME = "icosa_tv_sr" ]]; then
 	GAPPS="tvmini"
 fi
 

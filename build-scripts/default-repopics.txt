@@ -1,9 +1,0 @@
--t icosa-bt-lineage-17.1
--t nvidia-shieldtech-q
--t nvidia-beyonder-q
-300860
-287339
-302339
-302554
-302959
-284553

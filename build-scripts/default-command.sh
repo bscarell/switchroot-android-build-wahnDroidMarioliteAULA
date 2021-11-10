@@ -21,10 +21,16 @@ fi
 if [[ -z $FLAGS || ! -z ${FLAGS##*noupdate*} ]]; then
     if [[ -z $DUMMY_BUILD ]]; then
         cd ${BUILDBASE}
-        ./reset-changes-update-sources.sh
-        ./repopic-and-patch.sh
+        ./android/lineage/.repo/local_manifests/snack/snack.sh -y
     else
-        echo Dummy executed reset-changes-update-source.sh and repopic-and-patch-sh
+        echo Dummy executed snack and updated
+    fi
+else
+    if [[ -z $DUMMY_BUILD ]]; then
+        cd ${BUILDBASE}
+        ./android/lineage/.repo/local_manifests/snack/snack.sh -n
+    else
+        echo Dummy executed snack without updating
     fi
 fi
 
