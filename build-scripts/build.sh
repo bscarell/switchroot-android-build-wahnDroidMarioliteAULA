@@ -6,10 +6,17 @@ echo lineage_$ROM_NAME-userdebug
 
 cd ${BUILDBASE}/android/lineage
 source build/envsetup.sh
-export USE_CCACHE=1
-export CCACHE_EXEC=$(which ccache)
-export WITHOUT_CHECK_API=true
-ccache -M 50G
+
+if [[ -z $FLAGS || ! -z ${FLAGS##*noccache*} ]]; then
+  echo CCACHE of 50G will be used
+  export USE_CCACHE=1
+  export CCACHE_EXEC=$(which ccache)
+  export WITHOUT_CHECK_API=true
+  ccache -M 50G
+else
+  echo CCACHE will be disabled
+  export USE_CCACHE=0
+fi
 lunch lineage_$ROM_NAME-userdebug
 
 if [[ ! -z "$CUSTOM_BUILD" ]]; then
