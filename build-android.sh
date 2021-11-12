@@ -3,7 +3,7 @@
 ## This script creates the build image locally and builds Android.
 ##
 ## Possible parameters:
-##  --rom: rom to build. Possible values: icosa | foster | foster_tab
+##  --rom: rom to build. Possible values: icosa_sr | icosa_tv_sr
 ##  --rom-type: build output. Possible values: zip | images
 ##  --flags: flags to pass to the build script. Possible values: string that contains:
 ##      - nobuild: avoids running the build process.
@@ -20,8 +20,8 @@ while (($# > 0))
 
     case $Option in
     --rom)
-        if [[ "$Value" != "icosa" && "$Value" != "foster" && "$Value" != "foster_tab" ]]; then
-            echo "Invalid rom name. Expecting icosa | foster | foster_tab"
+        if [[ "$Value" != "icosa_sr" && "$Value" != "icosa_tv_sr" ]]; then
+            echo "Invalid rom name. Expecting icosa_sr | icosa_tv_sr"
             exit 1
         fi
         declare ROM_NAME="$Value"
@@ -69,7 +69,7 @@ done
 
 DUMMY_BUILD=${DUMMY_BUILD:-""}
 CUSTOM_BUILD="${CUSTOM_BUILD:-""}" 
-ROM_NAME=${ROM_NAME:-icosa} 
+ROM_NAME=${ROM_NAME:-icosa_sr} 
 ROM_TYPE=${ROM_TYPE:-zip} 
 FLAGS=${FLAGS:-""}
 
@@ -81,7 +81,7 @@ export FLAGS
 
 
 if [[ -z $ROM_NAME ]]; then
-    echo "Missing ROM_NAME env variable. Expected icosa | foster | foster_tab"
+    echo "Missing ROM_NAME env variable. Expected icosa_sr | icosa_tv_sr"
     exit 1
 else
     echo "ROM name: $ROM_NAME"
