@@ -8,7 +8,7 @@ cd ${BUILDBASE}
 # set gapps default to pico
 GAPPS="pico"
 
-ZIP_FILE=$(ls ./android/lineage/out/target/product/$ROM_NAME/lineage-17.1-*-UNOFFICIAL-$ROM_NAME.zip | tail -1)
+ZIP_FILE=$(ls ./android/lineage/out/target/product/$ROM_NAME/lineage-18.1-*-UNOFFICIAL-$ROM_NAME.zip | tail -1)
 
 ## Copy to output
 echo "Creating switchroot install dir..."
@@ -46,7 +46,7 @@ echo "Downloading $GAPPS Open GApps..."
 
 # get base URL for gapps
 BASE_GAPPS_URL=$(curl -L https://sourceforge.net/projects/opengapps/rss?path=/arm64 \
-	| grep -Po "https:\/\/.*10\.0-$GAPPS.*zip\/download" \
+	| grep -Po "https:\/\/.*11\.0-$GAPPS.*zip\/download" \
 	| head -n 1 \
 	| sed "s/\/download//" \
 	| sed "s/files\///" \
@@ -58,7 +58,7 @@ FULL_GAPPS_URL=$(echo $BASE_GAPPS_URL"?use_mirror=autoselect&ts="$TIMESTAMP)
 curl -L -o ./android/output/opengapps_$GAPPS.zip $FULL_GAPPS_URL
 
 ## Patch zip file to accept any bootloader version
-OUTPUT_ZIP_FILE=$(ls ./android/output/lineage-17.1-*-UNOFFICIAL-$ROM_NAME.zip | tail -1)
+OUTPUT_ZIP_FILE=$(ls ./android/output/lineage-18.1-*-UNOFFICIAL-$ROM_NAME.zip | tail -1)
 
 mkdir -p ./META-INF/com/google/android/
 unzip -p $OUTPUT_ZIP_FILE META-INF/com/google/android/updater-script > ./META-INF/com/google/android/updater-script.original
