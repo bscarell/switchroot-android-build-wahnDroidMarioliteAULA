@@ -2,7 +2,7 @@
 
 JOBS=$(($(nproc) + 1))
 
-echo lineage_$ROM_NAME-userdebug
+echo lineage_$ROM_NAME-$BUILD_TYPE
 
 cd ${BUILDBASE}/android/lineage
 source build/envsetup.sh
@@ -17,7 +17,7 @@ else
   echo CCACHE will be disabled
   export USE_CCACHE=0
 fi
-lunch lineage_$ROM_NAME-userdebug
+lunch lineage_$ROM_NAME-$BUILD_TYPE
 
 if [[ ! -z "$CUSTOM_BUILD" ]]; then
   nice $CUSTOM_BUILD

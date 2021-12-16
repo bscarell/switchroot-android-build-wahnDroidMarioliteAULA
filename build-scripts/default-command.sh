@@ -34,6 +34,20 @@ else
     fi
 fi
 
+if [[ -z $FLAGS || ! -z ${FLAGS##*eng*} ]]; then
+    if [[ -z $DUMMY_BUILD ]]; then
+        export BUILD_TYPE=userdebug
+    else
+        echo Dummy set userdebug
+    fi
+else
+    if [[ -z $DUMMY_BUILD ]]; then
+        export BUILD_TYPE=eng
+    else
+        echo Dummy set eng
+    fi
+fi
+
 if [[ -z $FLAGS || ! -z ${FLAGS##*nobuild*} ]]; then
     if [[ -z $DUMMY_BUILD ]]; then
         cd ${BUILDBASE}
