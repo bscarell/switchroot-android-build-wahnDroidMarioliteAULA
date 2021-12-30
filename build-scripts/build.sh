@@ -22,7 +22,7 @@ lunch lineage_$ROM_NAME-$BUILD_TYPE
 if [[ ! -z "$CUSTOM_BUILD" ]]; then
   nice $CUSTOM_BUILD
 elif [[ "$ROM_TYPE" == "zip" ]]; then
-  nice make -j${JOBS} bacon
+  m -j${JOBS} bacon
 else
-  nice make -j${JOBS} bootimage && nice make -j${JOBS} vendorimage && nice make -j${JOBS} systemimage
+  m -j${JOBS} bootimage && m -j${JOBS} vendorimage && m -j${JOBS} systemimage
 fi
