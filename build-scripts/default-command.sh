@@ -21,6 +21,7 @@ fi
 if [[ -z $FLAGS || ! -z ${FLAGS##*noupdate*} ]]; then
     if [[ -z $DUMMY_BUILD ]]; then
         cd ${BUILDBASE}/android/lineage
+        git -C .repo/local_manifests checkout lineage-17.1-icosa_sr
         ./.repo/local_manifests/snack/snack.sh -y
     else
         echo Dummy executed snack and updated
