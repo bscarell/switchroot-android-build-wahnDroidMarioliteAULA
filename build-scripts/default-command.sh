@@ -41,6 +41,12 @@ if [[ -z $FLAGS || ! -z ${FLAGS##*eng*} ]]; then
     else
         echo Dummy set userdebug
     fi
+elif [[ -z $FLAGS || ! -z ${FLAGS##*debug*} ]]; then
+    if [[ -z $DUMMY_BUILD ]]; then
+        export BUILD_TYPE=debug
+    else
+        echo Dummy set debug
+    fi
 else
     if [[ -z $DUMMY_BUILD ]]; then
         export BUILD_TYPE=eng
