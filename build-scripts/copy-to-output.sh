@@ -8,7 +8,7 @@ cd ${BUILDBASE}
 # set gapps default to pico
 GAPPS="pico"
 
-ZIP_FILE=$(ls ./android/lineage/out/target/product/$ROM_NAME/lineage-17.1-*-UNOFFICIAL-$ROM_NAME.zip | tail -1)
+ZIP_FILE=$(ls ./android/lineage/out/target/product/$ROM_NAME/lineage-18.1-*-UNOFFICIAL-$ROM_NAME.zip | tail -1)
 
 ## Copy to output
 echo "Creating switchroot install dir..."
@@ -46,7 +46,7 @@ echo "Downloading $GAPPS Open GApps..."
 
 # get base URL for gapps
 BASE_GAPPS_URL=$(curl -L https://sourceforge.net/projects/opengapps/rss?path=/arm64 \
-	| grep -Po "https:\/\/.*10\.0-$GAPPS.*zip\/download" \
+	| grep -Po "https:\/\/.*12\.0-$GAPPS.*zip\/download" \
 	| head -n 1 \
 	| sed "s/\/download//" \
 	| sed "s/files\///" \
