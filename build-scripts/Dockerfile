@@ -5,6 +5,8 @@ ENV ROM_NAME "icosa_sr"
 #by default, build zip
 ENV ROM_TYPE "zip"
 
+ENV TEMPORARY_DISABLE_PATH_RESTRICTIONS true
+
 #preserve cache in next to the code to improve build times
 ENV CCACHE_DIR "${BUILDBASE}/android/.ccache"
 
